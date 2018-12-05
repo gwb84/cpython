@@ -738,6 +738,9 @@ class MSVCCompiler(CCompiler) :
     # ccompiler.py.
 
     def library_dir_option(self, dir):
+      # patch a la https://bugs.python.org/issue13765
+        if ' ' in dir and not dir.startswith('"'):
+            dir = '"%s"' % dir
         return "/LIBPATH:" + dir
 
     def runtime_library_dir_option(self, dir):
